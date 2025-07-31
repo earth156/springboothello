@@ -9,8 +9,8 @@ import java.util.List;
 public class StudentService {
     public List<Student> getAllStudents() {
         return Arrays.asList(
-                new Student("เมสสี่", 20),
-                new Student("โด้", 22)
-                );
+            new Student("เมสซี่", 20, "messi@example.com"),
+            new Student("โด้", 22, "ronaldo@example.com")
+        );
     }
 }
