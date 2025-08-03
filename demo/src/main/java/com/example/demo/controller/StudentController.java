@@ -15,34 +15,41 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    // 1️⃣ ใช้ @RequestParam: /student/search?name=abc
     @GetMapping("/search")
     public String searchStudent(@RequestParam String name) {
-        return "Searching student with name: " + name +" This is @RequestParam ";      
+        return "Searching student with name: " + name;
     }
 
-    // 2️⃣ ใช้ @PathVariable: /student/10
     @GetMapping("/email/{email}")
-    public String getStudentByEmail(@PathVariable String email) {
-        return "Fetching student with email: " + email  +" This is @PathVariable ";
+    public Student getStudentByEmail(@PathVariable String email) {
+        return studentService.getByEmail(email);
     }
 
-    // 3️⃣ ใช้ @RequestBody และ @Valid: POST /student
     @PostMapping
-    public String createStudent(@Valid @RequestBody Student student) {
-        return "Created student: " + student.getName() + ", age: " + student.getAge() + ", email: " + student.getEmail()
-        +" This is @RequestBody & @Valid";
+    public Student createStudent(@Valid @RequestBody Student student) {
+        return studentService.createStudent(student);
     }
 
-    // 4️⃣ ใช้ @RequestParam หลายตัว: /student/filter?name=abc&age=20
+    @PutMapping("/{id}")
+    public Student updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
+        return studentService.updateStudent(id, student);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        return "ลบข้อมูลนักเรียน ID " + id + " สำเร็จ";
+    }
+
+
     @GetMapping("/filter")
     public String filterStudent(@RequestParam String name, @RequestParam int age) {
         return "Filtering student with name=" + name + " and age=" + age;
     }
 
-    // 5️⃣ GET /student => คืน list ของ student (ใช้ของเดิม)
     @GetMapping
     public List<Student> getStudents() {
         return studentService.getAllStudents();
     }
 }
+
