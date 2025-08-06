@@ -7,4 +7,9 @@ import java.util.List;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findByAgeBetween(int minAge, int maxAge);
+
+    List<Person> findByNameContainingIgnoreCaseAndAgeBetweenOrderByAgeDesc
+    (String name, int minAge, int maxAge);
+
+
 }
